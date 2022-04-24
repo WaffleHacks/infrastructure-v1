@@ -8,4 +8,5 @@ config:
   infrastructure:domains:
   - wafflehacks.org
   - wafflehacks.tech
+  infrastructure:project: WaffleHacks
   infrastructure:regions.digitalocean: sfo2

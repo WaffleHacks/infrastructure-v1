@@ -1,10 +1,14 @@
-import { Vpc } from '@pulumi/digitalocean';
+import { ProjectResources, Vpc, getProject } from '@pulumi/digitalocean';
 import { Config } from '@pulumi/pulumi';
 
 import Dns from './dns';
 import Server from './server';
 
 const config = new Config();
+
+const project = getProject({
+  name: config.require('project'),
+});
 
 const vpc = new Vpc('network', {
   ipRange: '10.93.35.0/24',
@@ -16,6 +20,11 @@ const primary = new Server('primary', {
   name: 'waffle-primary',
   size: 's-2vcpu-4gb',
   vpcId: vpc.id,
+});
+
+new ProjectResources('project-resources', {
+  project: project.then((p) => p.id),
+  resources: [primary.droplet],
 });
 
 new Dns('records', {

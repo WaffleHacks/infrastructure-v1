@@ -2,10 +2,13 @@ import { Droplet, Firewall } from '@pulumi/digitalocean';
 import {
   ComponentResource,
   ComponentResourceOptions,
+  Config,
   Input,
   Output,
   ResourceOptions,
 } from '@pulumi/pulumi';
+
+const config = new Config();
 
 interface Args {
   // The name for the server
@@ -17,6 +20,7 @@ interface Args {
 }
 
 class Server extends ComponentResource {
+  public readonly droplet: Output<string>;
   public readonly ipv4: Output<string>;
   public readonly ipv6: Output<string>;
 
@@ -32,7 +36,7 @@ class Server extends ComponentResource {
         image: '86718194', // Debian 10 x64
         ipv6: true,
         name: dropletName,
-        region: 'sfo2',
+        region: config.require('regions.digitalocean'),
         size,
         vpcUuid: vpcId,
       },
@@ -41,6 +45,7 @@ class Server extends ComponentResource {
 
     this.ipv4 = droplet.ipv4Address;
     this.ipv6 = droplet.ipv6Address;
+    this.droplet = droplet.dropletUrn;
 
     new Firewall(
       `${name}-firewall`,
