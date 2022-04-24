@@ -74,6 +74,16 @@
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
 
+"@pulumi/digitalocean@^4.12.0":
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/digitalocean/-/digitalocean-4.12.0.tgz#a4a3accd4533492696a41c05a1eff79f60c1d538"
+  integrity sha512-xYSbxA8Y474OXuTNytDUfQqkP3dBXnoTgkmDn87J/OQ9Hdpp77o4IjvpLfNZ2B9Pk4Ndl9WFDTzbSDPTkIp5nw==
+  dependencies:
+    "@pulumi/pulumi" "^3.0.0"
+    builtin-modules "3.0.0"
+    read-package-tree "^5.2.1"
+    resolve "^1.7.1"
+
 "@pulumi/pulumi@^3.0.0":
   version "3.30.0"
   resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.30.0.tgz#5f98d97f0d76b48f87a613274957f1f0a99c9c9a"
@@ -150,6 +160,11 @@ buffer-from@^1.0.0, buffer-from@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
   integrity sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==
+
+builtin-modules@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-3.0.0.tgz#1e587d44b006620d90286cc7a9238bbc6129cab1"
+  integrity sha512-hMIeU4K2ilbXV6Uv93ZZ0Avg/M91RaKXucQ+4me2Do1txxBDyDZWCBa5bJSLqoNTRpXTLwEzIk1KmloenDDjhg==
 
 call-bind@^1.0.0, call-bind@^1.0.2:
   version "1.0.2"
@@ -556,7 +571,7 @@ read-package-json@^2.0.0:
     normalize-package-data "^2.0.0"
     npm-normalize-package-bin "^1.0.0"
 
-read-package-tree@^5.3.1:
+read-package-tree@^5.2.1, read-package-tree@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/read-package-tree/-/read-package-tree-5.3.1.tgz#a32cb64c7f31eb8a6f31ef06f9cedf74068fe636"
   integrity sha512-mLUDsD5JVtlZxjSlPPx1RETkNjjvQYuweKwNVt1Sn8kP5Jh44pvYuUHCp6xSVDZWbNxVxG5lyZJ921aJH61sTw==
@@ -580,7 +595,7 @@ require-from-string@^2.0.1:
   resolved "https://registry.yarnpkg.com/require-from-string/-/require-from-string-2.0.2.tgz#89a7fdd938261267318eafe14f9c32e598c36909"
   integrity sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==
 
-resolve@^1.10.0:
+resolve@^1.10.0, resolve@^1.7.1:
   version "1.22.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.0.tgz#5e0b8c67c15df57a89bdbabe603a002f21731198"
   integrity sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw==
