@@ -57,18 +57,11 @@ class Server extends ComponentResource {
           protocol: 'tcp',
           sourceAddresses: ['0.0.0.0/0', '::/0'],
         })),
-        outboundRules: [
-          {
-            portRange: '1-65535',
-            protocol: 'udp',
-            destinationAddresses: ['0.0.0.0/0', '::/0'],
-          },
-          {
-            portRange: '1-65535',
-            protocol: 'tcp',
-            destinationAddresses: ['0.0.0.0/0', '::/0'],
-          },
-        ],
+        outboundRules: ['tcp', 'udp'].map((protocol) => ({
+          portRange: '1-65535',
+          protocol,
+          destinationAddresses: ['0.0.0.0/0', '::/0'],
+        })),
       },
       defaultResourceOptions,
     );
