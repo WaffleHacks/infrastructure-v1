@@ -1,0 +1,38 @@
+# This file defines the DNS records that should be created for each domain.
+# The format can be found in `./dns.ts`.
+
+wafflehacks.org:
+  # Infrastructure services
+  deploy:
+    kind: server
+    to: waffle-primary
+  traefik:
+    kind: server
+    to: waffle-primary
+  vault:
+    kind: server
+    to: waffle-primary
+
+  # Deployed services
+  api.apply:
+    kind: server
+    to: waffle-primary
+  bot:
+    kind: server
+    to: waffle-primary
+  cms:
+    kind: server
+    to: waffle-primary
+
+  # Extra DNS records
+  status:
+    kind: raw
+    to: cname.instatus.com
+    type: CNAME
+    proxied: false
+
+  # Remove www from URL
+  www:
+    kind: redirect
+    to: https://wafflehacks.org
+    type: permanent

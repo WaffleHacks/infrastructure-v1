@@ -5,5 +5,7 @@ config:
     secure: v1:pfVn+d96toi6mUIk:6hz9ZLTNYCkt5xJvKgiy1QHeFEc2auddiwNGzclB2WUD2SunVGKzvepKX+ifziC2w9LOcUF507A=
   digitalocean:token:
     secure: v1:n8JLJchbblYVyvUS:jPonJfUcqgwGShdQILxUgGnA2LaDdV02CpoeJfVZYlN5vMlajtebi8nUdiA/A+m7/dUJPpvbDxwxVgGqbgaqK2BOg1P29gM0JetX0OfLgxpn16cL8JlG
-  infrastructure:domain.primary: wafflehacks.org
-  infrastructure:domain.secondary: wafflehacks.tech
+  infrastructure:domains:
+  - wafflehacks.org
+  - wafflehacks.tech
+  infrastructure:regions.digitalocean: sfo2
