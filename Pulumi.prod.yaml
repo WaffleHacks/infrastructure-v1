@@ -1,2 +1,7 @@
 secretsprovider: hashivault://pulumi
 encryptedkey: dmF1bHQ6djE6M3dDYmxHbzFpT215bnNYK2JtdElhY2UrcnUwWW1zT1BZNkN1bXhZUVJwdnExT1ZpUVpLdmJ2bHRTU0svNS9iWlVRQWxEZjg0Q1c0Uk1OMU4=
+config:
+  cloudflare:apiToken:
+    secure: v1:pfVn+d96toi6mUIk:6hz9ZLTNYCkt5xJvKgiy1QHeFEc2auddiwNGzclB2WUD2SunVGKzvepKX+ifziC2w9LOcUF507A=
+  infrastructure:domain.primary: wafflehacks.org
+  infrastructure:domain.secondary: wafflehacks.tech
