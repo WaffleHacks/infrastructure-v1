@@ -42,10 +42,11 @@ wafflehacks.org:
 wafflehacks.tech:
   # Redirect everything to wafflehacks.org
   "@":
-    kind: redirect
-    to: https://wafflehacks.org
-    type: permanent
-    priority: 2
+    - kind: redirect
+      to: https://wafflehacks.org
+      type: permanent
+      priority: 2
+    - kind: proxy
   "*":
     kind: redirect
     to: https://$1.wafflehacks.org/$2

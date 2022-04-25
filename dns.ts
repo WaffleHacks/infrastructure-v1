@@ -45,7 +45,7 @@ interface RedirectRecord {
 }
 
 type RecordSpec = ProxyRecord | RawRecord | RedirectRecord | ServerRecord;
-type RecordSet = Record<string, RecordSpec>;
+type RecordSet = Record<string, RecordSpec | RecordSpec[]>;
 
 interface Server {
   v4: Input<string>;
@@ -80,97 +80,105 @@ class Dns extends ComponentResource {
         );
 
       // Create each subdomain
-      const records = recordSets[domain];
-      for (const subdomain in records) {
-        const record = records[subdomain];
+      const subdomains = recordSets[domain];
+      for (const subdomain in subdomains) {
+        const record = subdomain === '@' ? domain : subdomain;
 
-        switch (record.kind) {
-          case 'proxy':
-            new CloudflareRecord(
-              `record-proxy-${subdomain}.${domain}`,
-              {
-                name: subdomain,
-                ttl: 1,
-                type: 'AAAA',
-                value: '100::', // IPv6 discard prefix
-                proxied: true,
-                zoneId: zone,
-              },
-              defaultResourceOptions,
-            );
-            break;
+        const maybeSpecs = subdomains[subdomain];
+        const specs = Array.isArray(maybeSpecs) ? maybeSpecs : [maybeSpecs];
 
-          case 'raw':
-            new CloudflareRecord(
-              `record-raw-${record.type}-${subdomain}.${domain}`,
-              {
-                name: subdomain,
-                ttl: 1,
-                type: record.type,
-                value: record.to,
-                proxied: record.proxied,
-                zoneId: zone,
-              },
-              defaultResourceOptions,
-            );
-            break;
-
-          case 'redirect':
-            const path = record.path || '';
-            const statusCode = record.type === 'permanent' ? 301 : 302;
-            const target =
-              subdomain === '@' ? domain : `${subdomain}.${domain}`;
-
-            new PageRule(
-              `record-redirect-${subdomain}.${domain}`,
-              {
-                actions: {
-                  forwardingUrl: {
-                    statusCode,
-                    url: record.to,
-                  },
+        // Create all the specs
+        for (const spec of specs) {
+          switch (spec.kind) {
+            case 'proxy':
+              new CloudflareRecord(
+                `record-proxy-${subdomain}.${domain}`,
+                {
+                  name: record,
+                  ttl: 1,
+                  type: 'AAAA',
+                  value: '100::', // IPv6 discard prefix
+                  proxied: true,
+                  zoneId: zone,
                 },
-                priority: record.priority,
-                target: target + path,
-                zoneId: zone,
-              },
-              defaultResourceOptions,
-            );
-            break;
+                defaultResourceOptions,
+              );
+              break;
 
-          case 'server':
-            const server = servers[record.to];
-            if (!server)
-              throw new Error(`server '${record.to}' does not exist`);
+            case 'raw':
+              new CloudflareRecord(
+                `record-raw-${spec.type}-${subdomain}.${domain}`,
+                {
+                  name: record,
+                  ttl: 1,
+                  type: spec.type,
+                  value: spec.to,
+                  proxied: spec.proxied,
+                  zoneId: zone,
+                },
+                defaultResourceOptions,
+              );
+              break;
 
-            new CloudflareRecord(
-              `record-server-A-${subdomain}.${domain}`,
-              {
-                name: subdomain,
-                ttl: 1,
-                type: 'A',
-                value: server.v4,
-                proxied: true,
-                zoneId: zone,
-              },
-              defaultResourceOptions,
-            );
-            new CloudflareRecord(
-              `record-server-AAAA-${subdomain}.${domain}`,
-              {
-                name: subdomain,
-                ttl: 1,
-                type: 'AAAA',
-                value: server.v6,
-                proxied: true,
-                zoneId: zone,
-              },
-              defaultResourceOptions,
-            );
-            break;
+            case 'redirect':
+              const path = spec.path || '';
+              const statusCode = spec.type === 'permanent' ? 301 : 302;
+              const target =
+                subdomain === '@' ? domain : `${subdomain}.${domain}`;
 
-          default:
-            throw new Error(`unknown record kind for '${subdomain}.${domain}'`);
+              new PageRule(
+                `record-redirect-${subdomain}.${domain}`,
+                {
+                  actions: {
+                    forwardingUrl: {
+                      statusCode,
+                      url: spec.to,
+                    },
+                  },
+                  priority: spec.priority,
+                  target: target + path,
+                  zoneId: zone,
+                },
+                defaultResourceOptions,
+              );
+              break;
+
+            case 'server':
+              const server = servers[spec.to];
+              if (!server)
+                throw new Error(`server '${spec.to}' does not exist`);
+
+              new CloudflareRecord(
+                `record-server-A-${subdomain}.${domain}`,
+                {
+                  name: record,
+                  ttl: 1,
+                  type: 'A',
+                  value: server.v4,
+                  proxied: true,
+                  zoneId: zone,
+                },
+                defaultResourceOptions,
+              );
+              new CloudflareRecord(
+                `record-server-AAAA-${subdomain}.${domain}`,
+                {
+                  name: record,
+                  ttl: 1,
+                  type: 'AAAA',
+                  value: server.v6,
+                  proxied: true,
+                  zoneId: zone,
+                },
+                defaultResourceOptions,
+              );
+              break;
+
+            default:
+              throw new Error(
+                `unknown record kind for '${subdomain}.${domain}'`,
+              );
+          }
         }
       }
     }
