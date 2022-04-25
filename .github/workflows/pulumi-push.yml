@@ -35,6 +35,8 @@ jobs:
           role: ${{ secrets.VAULT_ROLE }}
           jwtGithubAudience: https://github.com/WaffleHacks
           exportToken: true
+          # This is a hack since secrets is currently required
+          secrets: auth/token/lookup-self accessor
 
       - run: yarn install
       - uses: pulumi/actions@v3
