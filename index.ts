@@ -40,7 +40,7 @@ new DNS('records', {
 });
 
 // Configure the applications
-const cms = new CMS('cms', { name: 'wafflehacks-cms' });
+// const cms = new CMS('cms', { name: 'wafflehacks-cms' });
 
 // Setup the AWS configuration for Hashicorp Vault
-new Vault('vault', { path: '/wafflehacks/', policies: [cms.policy] });
+new Vault('vault', { path: '/wafflehacks/', policies: [] });
