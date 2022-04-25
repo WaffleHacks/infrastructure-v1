@@ -27,16 +27,6 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           role-session-name: ${{ github.run_id }}
 
-      - uses: hashicorp/vault-action@master
-        with:
-          url: https://vault.wafflehacks.org
-          method: jwt
-          path: github-actions
-          role: infrastructure
-          exportToken: true
-          # This is a hack since secrets is currently required
-          secrets: auth/token/lookup-self accessor
-
       - run: yarn install
       - uses: pulumi/actions@v3
         with:
