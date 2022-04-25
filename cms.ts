@@ -26,7 +26,7 @@ class CMS extends ComponentResource {
     const bucket = new s3.BucketV2(
       `${name}-bucket`,
       {
-        bucketPrefix: bucketName,
+        bucket: bucketName,
       },
       defaultResourceOptions,
     );
