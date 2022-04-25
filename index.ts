@@ -3,6 +3,7 @@ import { Config } from '@pulumi/pulumi';
 
 import Dns from './dns';
 import Server from './server';
+import Vault from './vault';
 
 const config = new Config();
 
@@ -36,3 +37,5 @@ new Dns('records', {
     },
   },
 });
+
+new Vault('vault', { path: '/wafflehacks' });
