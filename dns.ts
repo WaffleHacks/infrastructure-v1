@@ -14,6 +14,11 @@ import {
 } from '@pulumi/pulumi';
 import { parse } from 'yaml';
 
+// Proxies the request through Cloudflare, but doesn't route anywhere
+interface ProxyRecord {
+  kind: 'proxy';
+}
+
 // A record pointing to a server created by Pulumi.
 // This will create two DNS records per instance: one for
 // IPv4 and one for IPv6.
@@ -36,9 +41,10 @@ interface RedirectRecord {
   to: string;
   path?: string;
   type?: 'permanent' | 'temporary';
+  priority?: number;
 }
 
-type RecordSpec = ServerRecord | RawRecord | RedirectRecord;
+type RecordSpec = ProxyRecord | RawRecord | RedirectRecord | ServerRecord;
 type RecordSet = Record<string, RecordSpec>;
 
 interface Server {
@@ -79,6 +85,21 @@ class Dns extends ComponentResource {
         const record = records[subdomain];
 
         switch (record.kind) {
+          case 'proxy':
+            new CloudflareRecord(
+              `record-proxy-${subdomain}.${domain}`,
+              {
+                name: subdomain,
+                ttl: 1,
+                type: 'AAAA',
+                value: '100::', // IPv6 discard prefix
+                proxied: true,
+                zoneId: zone,
+              },
+              defaultResourceOptions,
+            );
+            break;
+
           case 'raw':
             new CloudflareRecord(
               `record-raw-${record.type}-${subdomain}.${domain}`,
@@ -97,6 +118,8 @@ class Dns extends ComponentResource {
           case 'redirect':
             const path = record.path || '';
             const statusCode = record.type === 'permanent' ? 301 : 302;
+            const target =
+              subdomain === '@' ? domain : `${subdomain}.${domain}`;
 
             new PageRule(
               `record-redirect-${subdomain}.${domain}`,
@@ -107,7 +130,8 @@ class Dns extends ComponentResource {
                     url: record.to,
                   },
                 },
-                target: `${subdomain}.${domain}${path}`,
+                priority: record.priority,
+                target: target + path,
                 zoneId: zone,
               },
               defaultResourceOptions,

@@ -36,3 +36,35 @@ wafflehacks.org:
     kind: redirect
     to: https://wafflehacks.org
     type: permanent
+
+wafflehacks.tech:
+  # Redirect everything to wafflehacks.org
+  "@":
+    kind: redirect
+    to: https://wafflehacks.org
+    type: permanent
+    priority: 2
+  "*":
+    kind: redirect
+    to: https://$1.wafflehacks.org/$2
+    path: /*
+    type: permanent
+    priority: 1
+
+  # Route domains through Cloudflare for redirecting
+  apply:
+    kind: proxy
+  bot:
+    kind: proxy
+  cms:
+    kind: proxy
+  deploy:
+    kind: proxy
+  links:
+    kind: proxy
+  status:
+    kind: proxy
+  traefik:
+    kind: proxy
+  vault:
+    kind: proxy
