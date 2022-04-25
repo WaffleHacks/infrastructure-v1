@@ -25,6 +25,8 @@ wafflehacks.org:
     to: waffle-primary
 
   # Extra DNS records
+  links:
+    kind: proxy
   status:
     kind: raw
     to: cname.instatus.com
