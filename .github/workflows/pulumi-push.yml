@@ -27,6 +27,15 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           role-session-name: ${{ github.run_id }}
 
+      - uses: hashicorp/vault-action@v2
+        with:
+          url: https://vault.wafflehacks.org
+          method: jwt
+          path: github-actions
+          role: ${{ secrets.VAULT_ROLE }}
+          jwtGithubAudience: https://github.com/WaffleHacks
+          exportToken: true
+
       - run: yarn install
       - uses: pulumi/actions@v3
         with:
