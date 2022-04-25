@@ -27,7 +27,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           role-session-name: ${{ github.run_id }}
 
-      - uses: hashicorp/vault-action@40fb8d7236b213a2b83e03822c7ee04bb6f9e0da  # 40fb8d7 -> master (as of Apr 24)
+      - uses: hashicorp/vault-action@master
         with:
           url: https://vault.wafflehacks.org
           method: jwt
