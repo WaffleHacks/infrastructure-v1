@@ -1,5 +1,10 @@
 {
     "name": "infrastructure",
+    "scripts": {
+        "preview": "pulumi preview",
+        "lint": "eslint . --ext .ts --fix",
+        "lint:ci": "eslint . --ext .ts"
+    },
     "devDependencies": {
         "@types/node": "^14",
         "@typescript-eslint/eslint-plugin": "^5.20.0",
