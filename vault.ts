@@ -20,7 +20,7 @@ class Vault extends ComponentResource {
     super('wafflehacks:infrastructure:Vault', name, { options: opts }, opts);
 
     const defaultResourceOptions: ResourceOptions = { parent: this };
-    const { path = '', policies = [] } = args;
+    const { path = '/', policies = [] } = args;
 
     const accountId = getCallerIdentity({}).then((c) => c.accountId);
 
@@ -75,7 +75,7 @@ class Vault extends ComponentResource {
                 'iam:GetUser',
               ],
               Resource: [
-                interpolate`arn:aws:iam::${accountId}:user${path}/\${aws:username}`,
+                interpolate`arn:aws:iam::${accountId}:user${path}\${aws:username}`,
               ],
             },
           ],

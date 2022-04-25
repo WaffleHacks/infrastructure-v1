@@ -38,4 +38,4 @@ new Dns('records', {
   },
 });
 
-new Vault('vault', { path: '/wafflehacks' });
+new Vault('vault', { path: '/wafflehacks/' });
