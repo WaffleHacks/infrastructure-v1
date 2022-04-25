@@ -1,6 +1,7 @@
 {
     "name": "infrastructure",
     "scripts": {
+        "token": "vault login -method oidc -path oidc -token-only role=default",
         "preview": "pulumi preview",
         "lint": "eslint . --ext .ts --fix",
         "lint:ci": "eslint . --ext .ts"
