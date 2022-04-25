@@ -1,11 +1,13 @@
-name: Pulumi
+name: Pulumi Preview
 
 on:
-  - pull_request
+  pull_request:
+  push:
+    branches-ignore:
+      - main
 
 jobs:
   preview:
-    name: Preview
     runs-on: ubuntu-latest
     permissions:
       id-token: write
