@@ -1,4 +1,4 @@
-name: Pulumi
+name: Pulumi Update
 
 on:
   push:
@@ -7,7 +7,6 @@ on:
 
 jobs:
   update:
-    name: Update
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -27,13 +26,12 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           role-session-name: ${{ github.run_id }}
 
-      - uses: hashicorp/vault-action@40fb8d7236b213a2b83e03822c7ee04bb6f9e0da  # 40fb8d7 -> master (as of Apr 24)
+      - uses: hashicorp/vault-action@master
         with:
           url: https://vault.wafflehacks.org
           method: jwt
           path: github-actions
-          role: ${{ secrets.VAULT_ROLE }}
-          jwtGithubAudience: https://github.com/WaffleHacks
+          role: infrastructure
           exportToken: true
           # This is a hack since secrets is currently required
           secrets: auth/token/lookup-self accessor
@@ -45,3 +43,4 @@ jobs:
           stack-name: wafflehacks/infrastructure/prod
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          VAULT_ADDR: https://vault.wafflehacks.org
