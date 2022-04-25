@@ -1,0 +1,36 @@
+name: Pulumi
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-west-2
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          role-session-name: ${{ github.run_id }}
+
+      - run: yarn install
+      - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: prod
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
