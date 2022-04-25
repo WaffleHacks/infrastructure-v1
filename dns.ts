@@ -9,6 +9,7 @@ import {
 import {
   ComponentResource,
   ComponentResourceOptions,
+  CustomResourceOptions,
   Input,
   ResourceOptions,
 } from '@pulumi/pulumi';
@@ -64,6 +65,10 @@ class Dns extends ComponentResource {
     super('wafflehacks:infrastructure:Dns', name, { options: opts }, opts);
 
     const defaultResourceOptions: ResourceOptions = { parent: this };
+    const recordResourceOptions: CustomResourceOptions = {
+      parent: this,
+      deleteBeforeReplace: true,
+    };
     const { domains, servers } = args;
 
     // Load the records and zones
@@ -82,7 +87,7 @@ class Dns extends ComponentResource {
       // Create each subdomain
       const subdomains = recordSets[domain];
       for (const subdomain in subdomains) {
-        const record = subdomain === '@' ? domain : subdomain;
+        const record = subdomain === '@' ? domain : `${subdomain}.${domain}`;
 
         const maybeSpecs = subdomains[subdomain];
         const specs = Array.isArray(maybeSpecs) ? maybeSpecs : [maybeSpecs];
@@ -92,7 +97,7 @@ class Dns extends ComponentResource {
           switch (spec.kind) {
             case 'proxy':
               new CloudflareRecord(
-                `record-proxy-${subdomain}.${domain}`,
+                `record-proxy-${record}`,
                 {
                   name: record,
                   ttl: 1,
@@ -101,13 +106,13 @@ class Dns extends ComponentResource {
                   proxied: true,
                   zoneId: zone,
                 },
-                defaultResourceOptions,
+                recordResourceOptions,
               );
               break;
 
             case 'raw':
               new CloudflareRecord(
-                `record-raw-${spec.type}-${subdomain}.${domain}`,
+                `record-raw-${spec.type}-${record}`,
                 {
                   name: record,
                   ttl: 1,
@@ -116,18 +121,16 @@ class Dns extends ComponentResource {
                   proxied: spec.proxied,
                   zoneId: zone,
                 },
-                defaultResourceOptions,
+                recordResourceOptions,
               );
               break;
 
             case 'redirect':
               const path = spec.path || '';
               const statusCode = spec.type === 'permanent' ? 301 : 302;
-              const target =
-                subdomain === '@' ? domain : `${subdomain}.${domain}`;
 
               new PageRule(
-                `record-redirect-${subdomain}.${domain}`,
+                `record-redirect-${record}`,
                 {
                   actions: {
                     forwardingUrl: {
@@ -136,7 +139,7 @@ class Dns extends ComponentResource {
                     },
                   },
                   priority: spec.priority,
-                  target: target + path,
+                  target: record + path,
                   zoneId: zone,
                 },
                 defaultResourceOptions,
@@ -149,7 +152,7 @@ class Dns extends ComponentResource {
                 throw new Error(`server '${spec.to}' does not exist`);
 
               new CloudflareRecord(
-                `record-server-A-${subdomain}.${domain}`,
+                `record-server-A-${record}`,
                 {
                   name: record,
                   ttl: 1,
@@ -158,10 +161,10 @@ class Dns extends ComponentResource {
                   proxied: true,
                   zoneId: zone,
                 },
-                defaultResourceOptions,
+                recordResourceOptions,
               );
               new CloudflareRecord(
-                `record-server-AAAA-${subdomain}.${domain}`,
+                `record-server-AAAA-${record}`,
                 {
                   name: record,
                   ttl: 1,
@@ -170,14 +173,12 @@ class Dns extends ComponentResource {
                   proxied: true,
                   zoneId: zone,
                 },
-                defaultResourceOptions,
+                recordResourceOptions,
               );
               break;
 
             default:
-              throw new Error(
-                `unknown record kind for '${subdomain}.${domain}'`,
-              );
+              throw new Error(`unknown record kind for '${record}'`);
           }
         }
       }
