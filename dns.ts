@@ -60,9 +60,9 @@ interface Args {
   servers: Record<string, Server>;
 }
 
-class Dns extends ComponentResource {
+class DNS extends ComponentResource {
   constructor(name: string, args: Args, opts?: ComponentResourceOptions) {
-    super('wafflehacks:infrastructure:Dns', name, { options: opts }, opts);
+    super('wafflehacks:infrastructure:DNS', name, { options: opts }, opts);
 
     const defaultResourceOptions: ResourceOptions = { parent: this };
     const recordResourceOptions: CustomResourceOptions = {
@@ -204,4 +204,4 @@ class Dns extends ComponentResource {
   }
 }
 
-export default Dns;
+export default DNS;

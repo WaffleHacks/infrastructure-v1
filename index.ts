@@ -2,7 +2,7 @@ import { ProjectResources, Vpc, getProject } from '@pulumi/digitalocean';
 import { Config } from '@pulumi/pulumi';
 
 import CMS from './cms';
-import Dns from './dns';
+import DNS from './dns';
 import Server from './server';
 import Vault from './vault';
 
@@ -29,7 +29,7 @@ new ProjectResources('project-resources', {
   resources: [primary.droplet],
 });
 
-new Dns('records', {
+new DNS('records', {
   domains: config.requireObject('domains'),
   servers: {
     'waffle-primary': {
