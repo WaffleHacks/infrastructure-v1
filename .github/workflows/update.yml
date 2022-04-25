@@ -31,8 +31,7 @@ jobs:
           url: https://vault.wafflehacks.org
           method: jwt
           path: github-actions
-          role: ${{ secrets.VAULT_ROLE }}
-          jwtGithubAudience: https://github.com/WaffleHacks
+          role: infrastructure
           exportToken: true
           # This is a hack since secrets is currently required
           secrets: auth/token/lookup-self accessor
