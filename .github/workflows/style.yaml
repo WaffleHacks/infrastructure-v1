@@ -6,6 +6,9 @@ jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v2
 
@@ -16,4 +19,6 @@ jobs:
           cache-dependency-path: yarn.lock
 
       - run: yarn install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: yarn lint:ci

@@ -30,6 +30,8 @@ jobs:
           role-session-name: ${{ github.run_id }}
 
       - run: yarn install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: pulumi/actions@v3
         with:
           command: up
