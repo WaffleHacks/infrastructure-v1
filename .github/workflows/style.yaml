@@ -17,6 +17,8 @@ jobs:
           node-version-file: .nvmrc
           cache: yarn
           cache-dependency-path: yarn.lock
+          registry-url: https://npm.pkg.github.com
+          scope: '@wafflehacks'
 
       - run: yarn install
         env:
