@@ -4,6 +4,8 @@ config:
     secure: AAABAFteXZBnY4eY52gl+EyKqcQZbvPBqow8AD3oCQlHt1zcrXvOAYevd3/UbfFckIQQU4E04LFIAn8zVXpkGDkY70C8KfDz
   digitalocean:token:
     secure: AAABANp/rwJuqbDxcRayYgErb5Td//vAE2af8LVVzxViTN8EktfvT59EokERM5BKKkhTooF06bnvK2HPz3bbn3WZ82RoWtWloRinBBynosh8EKDjEaMyxVs2ClVErZi9u0oLvqHUKw==
+  infrastructure:application-portal.profiles-topic:
+    secure: AAABAGtWkLKJ1Lvc+oX7l0/ZhQNBcqMGX+vXTomZG8sR7VN95EGNBpCqpIHVXqrEJNtcXh0tzEVt21dVfO735RCgj4GrIsxLIwTptzqY+UXm8EiK+A==
   infrastructure:domains:
   - wafflehacks.org
   - wafflehacks.tech

@@ -9,8 +9,8 @@ jobs:
   update:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v2
 
@@ -19,6 +19,8 @@ jobs:
           node-version-file: .nvmrc
           cache: yarn
           cache-dependency-path: yarn.lock
+          registry-url: https://npm.pkg.github.com
+          scope: '@wafflehacks'
 
       - uses: aws-actions/configure-aws-credentials@v1
         with:

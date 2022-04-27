@@ -1,5 +1,6 @@
 import { ProjectResources, Vpc, getProject } from '@pulumi/digitalocean';
 import { Config } from '@pulumi/pulumi';
+import ApplicationPortal from '@wafflehacks/application-portal';
 
 import CMS from './cms';
 import DNS from './dns';
@@ -40,7 +41,14 @@ new DNS('records', {
 });
 
 // Configure the applications
+const applicationPortal = new ApplicationPortal('application-portal', {
+  resumesBucket: 'wafflehacks-resumes',
+  profilesTopic: config.requireSecret('application-portal.profiles-topic'),
+});
 const cms = new CMS('cms', { name: 'wafflehacks-cms' });
 
 // Setup the AWS configuration for Hashicorp Vault
-new Vault('vault', { path: '/wafflehacks/', policies: [cms.policy] });
+new Vault('vault', {
+  path: '/wafflehacks/',
+  policies: [...applicationPortal.policies, cms.policy],
+});
