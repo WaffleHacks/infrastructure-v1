@@ -46,7 +46,10 @@ const applicationPortal = new ApplicationPortal('application-portal', {
   resumesBucket: 'wafflehacks-resumes',
   profilesTopic: config.requireSecret('application-portal.profiles-topic'),
 });
-const cms = new CMS('cms', { name: 'wafflehacks-cms' });
+const cms = new CMS('cms', {
+  name: 'wafflehacks-cms',
+  sesIdentity: config.requireSecret('sesIdentity'),
+});
 
 // Setup the AWS configuration for Hashicorp Vault
 new Vault('vault', {

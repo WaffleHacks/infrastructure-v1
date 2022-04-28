@@ -11,3 +11,5 @@ config:
   - wafflehacks.tech
   infrastructure:project: WaffleHacks
   infrastructure:regions.digitalocean: sfo2
+  infrastructure:sesIdentity:
+    secure: AAABAGkda06xWoCSYTIJN20JnK+yEBLeMt7HPeblhyM9Q24Nt8n4HECy0VSgN2RmFi7OSe2KaX+hK5U7p/KlTVapaE3wpI39frlzIH1XHbJ5z1QLbfGZj37+nQ==
