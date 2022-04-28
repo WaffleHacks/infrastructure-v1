@@ -42,6 +42,7 @@ new DNS('records', {
 
 // Configure the applications
 const applicationPortal = new ApplicationPortal('application-portal', {
+  domain: 'apply.wafflehacks.org',
   resumesBucket: 'wafflehacks-resumes',
   profilesTopic: config.requireSecret('application-portal.profiles-topic'),
 });
