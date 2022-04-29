@@ -1,4 +1,9 @@
 config:
+  auth0:clientId:
+    secure: AAABAAN2FlXkS0fpJvPqk2Z+Hl75xaqzRv7CAzWtXSGo+wSLiIgtpFimVB0QlASDaKVjW4MNqalhEeFg73x8SA==
+  auth0:clientSecret:
+    secure: AAABAJgJ2BVC15HeIVfqGE5lXzeGGtj3vTGkYoDWZ9J4dJEC4kK/Em1P2bq3cAHSCZS61ZisE8RD8zya9RP9+UplC+ELL11tBmqNNPH+E+8jfxk3yJAzVvcQmTwmvlpj
+  auth0:domain: login.wafflehacks.org
   aws:region: us-west-2
   cloudflare:apiToken:
     secure: AAABAFteXZBnY4eY52gl+EyKqcQZbvPBqow8AD3oCQlHt1zcrXvOAYevd3/UbfFckIQQU4E04LFIAn8zVXpkGDkY70C8KfDz
