@@ -42,6 +42,7 @@ class Vault extends ComponentResource {
                 'iam:DeleteUser',
                 'iam:ListAccessKeys',
                 'iam:ListAttachedUserPolicies',
+                'iam:ListGroupsForUser',
                 'iam:ListUserPolicies',
               ],
               Resource: [interpolate`arn:aws:iam::${accountId}:user/vault-*`],
