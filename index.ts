@@ -52,7 +52,7 @@ const cms = new CMS('cms', {
   sesIdentity: config.requireSecret('sesIdentity'),
 });
 const mailer = new Mailer('mailer', {
-  sesIdentity: config.requireSecret('sesIdentity'),
+  fromDomains: config.requireObject('emailDomains'),
 });
 
 // Setup the AWS configuration for Hashicorp Vault

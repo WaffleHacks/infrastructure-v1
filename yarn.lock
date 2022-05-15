@@ -328,10 +328,10 @@
     "@pulumi/aws" "^5.3.0"
     "@pulumi/pulumi" "^3.30.0"
 
-"@wafflehacks/mailer@^0.1.3":
-  version "0.1.3"
-  resolved "https://npm.pkg.github.com/download/@wafflehacks/mailer/0.1.3/57247ee3aa2ecadb54b88431d6f345f872b7b96d5457ac7df0fe752cf90554a8#cb983368a6fcb75d027e2e15a90eae4d5b4d06c3"
-  integrity sha512-WsqqU4tdbsmdXKZDN9F/AcpNmninpGyZC0zqWTe8hTjTe0W/YXKLC3w16z2InRwLI7h/Q/SRxO44iSqhmkigEA==
+"@wafflehacks/mailer@^0.1.4":
+  version "0.1.4"
+  resolved "https://npm.pkg.github.com/download/@wafflehacks/mailer/0.1.4/8e3fa550b55d37d12c464c513ea8434aad407107da13546829b86080367d5dee#f6ea040fef35bee6615276828b0a1d295e1993dd"
+  integrity sha512-JRyJ76AkKmJHRxF084lbuBG44L0Fvl0gtjnweA0NESwYVsbk04ArflX/X5w9H38nfIxPsSDhXN9JvIs/hXed5g==
   dependencies:
     "@pulumi/aws" "^5.3.0"
     "@pulumi/pulumi" "^3.31.0"
