@@ -49,7 +49,7 @@ const applicationPortal = new ApplicationPortal('application-portal', {
 });
 const cms = new CMS('cms', {
   name: 'wafflehacks-cms',
-  sesIdentity: config.requireSecret('sesIdentity'),
+  fromAddress: 'cms@wafflehacks.org',
 });
 const mailer = new Mailer('mailer', {
   fromDomains: config.requireObject('emailDomains'),

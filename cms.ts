@@ -4,7 +4,6 @@ import { Policy } from '@pulumi/aws/iam';
 import {
   ComponentResource,
   CustomResourceOptions,
-  Input,
   Output,
   ResourceOptions,
   interpolate,
@@ -13,8 +12,8 @@ import {
 interface Args {
   // The name of the bucket to create
   name: string;
-  // The SES identity to send emails out on
-  sesIdentity: Input<string>;
+  // The email address the CMS can use
+  fromAddress: string;
 }
 
 class CMS extends ComponentResource {
@@ -24,7 +23,7 @@ class CMS extends ComponentResource {
     super('wafflehacks:infrastructure:CMS', name, { options: opts }, opts);
 
     const defaultResourceOptions: ResourceOptions = { parent: this };
-    const { name: bucketName, sesIdentity } = args;
+    const { name: bucketName, fromAddress } = args;
 
     const bucket = new s3.BucketV2(
       `${name}-bucket`,
@@ -68,7 +67,12 @@ class CMS extends ComponentResource {
             {
               Effect: 'Allow',
               Action: ['ses:SendEmail', 'ses:SendRawEmail'],
-              Resource: [sesIdentity],
+              Resource: '*',
+              Condition: {
+                StringEquals: {
+                  'ses:FromAddress': fromAddress,
+                },
+              },
             },
           ],
         },
