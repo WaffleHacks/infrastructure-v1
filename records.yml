@@ -17,9 +17,6 @@ wafflehacks.org:
   api.apply:
     kind: server
     to: waffle-primary
-  bot:
-    kind: server
-    to: waffle-primary
   cms:
     kind: server
     to: waffle-primary
