@@ -16,5 +16,7 @@ config:
   - wafflehacks.tech
   infrastructure:emailDomains:
   - wafflehacks.org
+  infrastructure:profiles.api-gateway:
+    secure: AAABALsiSN7hu2u6JYpKjrlgILS0KU0zQSb9bb7IYQSTvRYvdy+HAmoA
   infrastructure:project: WaffleHacks
   infrastructure:regions.digitalocean: sfo2

@@ -1,6 +1,7 @@
 import { ProjectResources, Vpc, getProject } from '@pulumi/digitalocean';
 import { Config } from '@pulumi/pulumi';
 import ApplicationPortal from '@wafflehacks/application-portal';
+import DiscordLinking from '@wafflehacks/discord-linking';
 import Mailer from '@wafflehacks/mailer';
 
 import CMS from './cms';
@@ -9,6 +10,8 @@ import Server from './server';
 import Vault from './vault';
 
 const config = new Config();
+
+console.log(config.require('aws:region'));
 
 const project = getProject({
   name: config.require('project'),
@@ -51,6 +54,11 @@ const cms = new CMS('cms', {
   name: 'wafflehacks-cms',
   fromAddress: 'cms@wafflehacks.org',
 });
+const discordLinking = new DiscordLinking('discord-linking', {
+  domain: 'discord.wafflehacks.org',
+  region: 'us-west-2',
+  apiGateway: config.requireSecret('profiles.api-gateway'),
+});
 const mailer = new Mailer('mailer', {
   fromDomains: config.requireObject('emailDomains'),
 });
@@ -58,5 +66,10 @@ const mailer = new Mailer('mailer', {
 // Setup the AWS configuration for Hashicorp Vault
 new Vault('vault', {
   path: '/wafflehacks/',
-  policies: [...applicationPortal.policies, cms.policy, mailer.policy],
+  policies: [
+    ...applicationPortal.policies,
+    cms.policy,
+    discordLinking.policy,
+    mailer.policy,
+  ],
 });

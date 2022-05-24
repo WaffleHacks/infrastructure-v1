@@ -20,6 +20,9 @@ wafflehacks.org:
   cms:
     kind: server
     to: waffle-primary
+  discord:
+    kind: server
+    to: waffle-primary
 
   # Extra DNS records
   links:
