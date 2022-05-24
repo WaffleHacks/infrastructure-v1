@@ -11,8 +11,6 @@ import Vault from './vault';
 
 const config = new Config();
 
-console.log(config.require('aws:region'));
-
 const project = getProject({
   name: config.require('project'),
 });
