@@ -362,10 +362,10 @@
     "@pulumi/aws" "^5.3.0"
     "@pulumi/pulumi" "^3.30.0"
 
-"@wafflehacks/discord-linking@^0.1.0":
-  version "0.1.0"
-  resolved "https://npm.pkg.github.com/download/@wafflehacks/discord-linking/0.1.0/76bbe286e5170d4b34fb01b472672c5549a17b39032b0f8ad9e02361b96a9721#db0b093a3f36247dc1f8d37b4c1177764aebe2bb"
-  integrity sha512-q1J0RwxYG2VFAaX2yulH2+q3EAKJTiiOYVGd6IqB9bCj31ZNw1hR/8vY6eBgaGmg33rpryvGB3Hw5JvRcy+bCg==
+"@wafflehacks/discord-linking@^0.1.2":
+  version "0.1.2"
+  resolved "https://npm.pkg.github.com/download/@wafflehacks/discord-linking/0.1.2/4a4e2e36ef3989920a36da8d7413f62e196de764d9cfa0772851f8edb95de94e#2f01ebadb0d6399a8a5ca89726aa8220b5ea2178"
+  integrity sha512-wl7O94raat8t2ibouc0DSRHNH2Hm8yCsOFmrW+cFP4GkF6JPpsoo29uAu7VX0fyLgpXWpLkTA5nE6ARaFmQT1Q==
   dependencies:
     "@pulumi/auth0" "^2.8.0"
     "@pulumi/aws" "^5.4.0"
