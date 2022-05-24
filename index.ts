@@ -60,7 +60,7 @@ const discordLinking = new DiscordLinking('discord-linking', {
   apiGateway: config.requireSecret('profiles.api-gateway'),
 });
 const mailer = new Mailer('mailer', {
-  fromDomains: config.requireObject('emailDomains'),
+  fromDomains: config.requireObject('email-domains'),
 });
 
 // Setup the AWS configuration for Hashicorp Vault
