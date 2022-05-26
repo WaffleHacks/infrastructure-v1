@@ -7,6 +7,7 @@ import Mailer from '@wafflehacks/mailer';
 import CMS from './cms';
 import DNS from './dns';
 import Server from './server';
+import Transforms from './transforms';
 import Vault from './vault';
 
 const config = new Config();
@@ -41,6 +42,7 @@ new DNS('records', {
     },
   },
 });
+new Transforms('transforms', { domains: config.requireObject('domains') });
 
 // Configure the applications
 const applicationPortal = new ApplicationPortal('application-portal', {

@@ -1,0 +1,11 @@
+# This file defines the transform rules that should be applied to each domain.
+# The file format can be found in `./transforms.ts`.
+
+wafflehacks.org:
+  requestHeaders:
+    - description: Remove OpenTelemetry propagator headers
+      when: always
+      remove:
+        - baggage
+        - traceparent
+        - tracestate

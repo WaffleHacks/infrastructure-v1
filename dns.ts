@@ -1,11 +1,4 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
-import {
-  Record as CloudflareRecord,
-  PageRule,
-  getZone,
-} from '@pulumi/cloudflare';
+import { Record as CloudflareRecord, PageRule } from '@pulumi/cloudflare';
 import {
   ComponentResource,
   ComponentResourceOptions,
@@ -13,7 +6,8 @@ import {
   Input,
   ResourceOptions,
 } from '@pulumi/pulumi';
-import { parse } from 'yaml';
+
+import { domainsToZones, loadConfig } from './utils';
 
 // Proxies the request through Cloudflare, but doesn't route anywhere
 interface ProxyRecord {
@@ -72,8 +66,8 @@ class DNS extends ComponentResource {
     const { domains, servers } = args;
 
     // Load the records and zones
-    const recordSets = this.load();
-    const zones = this.domainsToZones(domains, defaultResourceOptions);
+    const recordSets = loadConfig<Record<string, RecordSet>>('records.yml');
+    const zones = domainsToZones(domains, defaultResourceOptions);
 
     // Create the records for each domain
     for (const domain in recordSets) {
@@ -185,22 +179,6 @@ class DNS extends ComponentResource {
     }
 
     this.registerOutputs();
-  }
-
-  load(): Record<string, RecordSet> {
-    const path = join(__dirname, 'records.yml');
-    const content = readFileSync(path, {
-      encoding: 'utf-8',
-    });
-
-    return parse(content);
-  }
-
-  domainsToZones(domains: string[], options: ResourceOptions) {
-    return domains.reduce<Record<string, Promise<string>>>((obj, name) => {
-      obj[name] = getZone({ name }, options).then((z) => z.id);
-      return obj;
-    }, {});
   }
 }
 
