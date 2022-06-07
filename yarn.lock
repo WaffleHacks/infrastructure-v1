@@ -353,10 +353,10 @@
     "@typescript-eslint/types" "5.20.0"
     eslint-visitor-keys "^3.0.0"
 
-"@wafflehacks/application-portal@^0.1.5":
-  version "0.1.5"
-  resolved "https://npm.pkg.github.com/download/@wafflehacks/application-portal/0.1.5/ce297d75ffb0599dcb4d3be048f292becb7ffcbc1b8c30ae3173713822d687ba#e250a2a0c71f6464a2d793e5596b3301ed89576f"
-  integrity sha512-oDEDpaiNaHzalkm7KAJPe6NkQvziPaStOc9AcTnzxrf0+kxlUL6dPbWR/10r1onOQcJSypLcRDAgtn7TkIKTbQ==
+"@wafflehacks/application-portal@^0.1.6":
+  version "0.1.6"
+  resolved "https://npm.pkg.github.com/download/@wafflehacks/application-portal/0.1.6/79fc228219a31f9fadbfdee6d539e962ba04447fc11892da3f41e6ec6ff12e41#82923df68a295451bf26f02397b2dd5acd062b1d"
+  integrity sha512-aYdi1Gx9U86Unl+udJMCZN+jNv9fKTyCK+Gwfb720V78GI/c6rY+5beH3pjBkk+QztSShppJupoOvUI0nMLpxQ==
   dependencies:
     "@pulumi/auth0" "^2.8.0"
     "@pulumi/aws" "^5.3.0"

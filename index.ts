@@ -11,6 +11,11 @@ import Transforms from './transforms';
 import Vault from './vault';
 
 const config = new Config();
+const profilesConfig = {
+  apiGateway: config.requireSecret('profiles.api-gateway'),
+  region: config.require('profiles.region'),
+  topic: config.requireSecret('profiles.topic'),
+};
 
 const project = getProject({
   name: config.require('project'),
@@ -48,7 +53,7 @@ new Transforms('transforms', { domains: config.requireObject('domains') });
 const applicationPortal = new ApplicationPortal('application-portal', {
   domain: 'apply.wafflehacks.org',
   resumesBucket: 'wafflehacks-resumes',
-  profilesTopic: config.requireSecret('application-portal.profiles-topic'),
+  profiles: profilesConfig,
 });
 const cms = new CMS('cms', {
   name: 'wafflehacks-cms',
@@ -57,7 +62,7 @@ const cms = new CMS('cms', {
 const discordLinking = new DiscordLinking('discord-linking', {
   domain: 'discord.wafflehacks.org',
   region: 'us-west-2',
-  apiGateway: config.requireSecret('profiles.api-gateway'),
+  apiGateway: profilesConfig.apiGateway,
 });
 const mailer = new Mailer('mailer', {
   fromDomains: config.requireObject('email-domains'),

@@ -21,7 +21,7 @@
         "@pulumi/cloudflare": "^4.6.0",
         "@pulumi/digitalocean": "^4.12.0",
         "@pulumi/pulumi": "^3.0.0",
-        "@wafflehacks/application-portal": "^0.1.5",
+        "@wafflehacks/application-portal": "^0.1.6",
         "@wafflehacks/discord-linking": "^0.1.2",
         "@wafflehacks/mailer": "^0.1.4",
         "yaml": "^2.0.1"
