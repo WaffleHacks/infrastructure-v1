@@ -57,6 +57,8 @@ wafflehacks.tech:
   # Route domains through Cloudflare for redirecting
   apply:
     kind: proxy
+  login:
+    kind: proxy
   bot:
     kind: proxy
   cms:
