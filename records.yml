@@ -22,8 +22,6 @@ wafflehacks.org:
     to: waffle-primary
 
   # Extra DNS records
-  links:
-    kind: proxy
   status:
     kind: raw
     to: cname.instatus.com
@@ -61,8 +59,6 @@ wafflehacks.tech:
   cms:
     kind: proxy
   deploy:
-    kind: proxy
-  links:
     kind: proxy
   status:
     kind: proxy
